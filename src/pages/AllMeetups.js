@@ -1,29 +1,44 @@
+import { useState, useEffect } from "react";
+
 import MeetupList from "../components/meetups/MeetupList";
 
-const DUMMY_DATA = [
-  {
-    id: "m1",
-    title: "This is a first meetup",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/2560px-Stadtbild_M%C3%BCnchen.jpg",
-    address: "Meetupstreet 5, 12345 Meetup City",
-    description: "This is a first, amazing meetup which you definitely should not miss. It will be a lot of fun!",
-  },
-  {
-    id: "m2",
-    title: "This is a second meetup",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/2560px-Stadtbild_M%C3%BCnchen.jpg",
-    address: "Meetupstreet 5, 12345 Meetup City",
-    description: "This is a first, amazing meetup which you definitely should not miss. It will be a lot of fun!",
-  },
-];
-
 function AllMeetupsPage() {
-  return (
-    <section>
-      <h1>All Meetups</h1>
-      <MeetupList meetups={DUMMY_DATA} />
-    </section>
-  );
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadedMeetups, setLoadedMeetups] = useState([]);
+
+  useEffect(() => {
+    fetch("")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        const meetups = [];
+        for (const key in data) {
+          const meetup = {
+            id: key,
+            ...data[key], // spread operator
+          };
+          meetups.push(meetup);
+        }
+        setIsLoading(false);
+        setLoadedMeetups(meetups);
+      });
+  }, []); // 해당 의존성 배열에 있는 값이 변경될 때만 useEffect가 실행됨
+
+  if (isLoading) {
+    return (
+      <section>
+        <p>Loading...</p>
+      </section>
+    );
+  } else {
+    return (
+      <section>
+        <h1>All Meetups</h1>
+        <MeetupList meetups={loadedMeetups} />
+      </section>
+    );
+  }
 }
 
 export default AllMeetupsPage;
