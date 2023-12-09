@@ -1,6 +1,10 @@
+import { useHistory } from "react-router-dom";
+
 import NewMeetupForm from "../components/meetups/NewMeetupForm";
 
 function NewMeetupsPage() {
+  const history = useHistory();
+
   function addMeetipHandler(meetupData) {
     const URL = "";
     fetch(URL, {
@@ -9,6 +13,8 @@ function NewMeetupsPage() {
       headers: {
         "Content-Type": "application/json",
       },
+    }).then(() => {
+      history.replace("/");
     });
   }
   return (
