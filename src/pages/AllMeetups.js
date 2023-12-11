@@ -7,7 +7,7 @@ function AllMeetupsPage() {
   const [loadedMeetups, setLoadedMeetups] = useState([]);
 
   useEffect(() => {
-    fetch("")
+    fetch("YOU SHOULD ADD LINK HERE")
       .then((response) => {
         return response.json();
       })

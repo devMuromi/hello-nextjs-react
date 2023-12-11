@@ -6,7 +6,7 @@ function NewMeetupsPage() {
   const history = useHistory();
 
   function addMeetipHandler(meetupData) {
-    const URL = "";
+    const URL = "YOU SHOULD ADD LINK HERE";
     fetch(URL, {
       method: "POST",
       body: JSON.stringify(meetupData),
